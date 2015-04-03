@@ -37,20 +37,23 @@ $(document).ready(function() {
 
 		// Disk space usage
 		var requestDiskSpaceUsage = $.ajax({
-			url: "getNumberDisks.php",
-			//url: "getDiskSpaceUsage.php",
+			//url: "getNumberDisks.php",
+			url: "getDiskSpaceUsage.php",
 			method: 'POST',
-			dataType: 'json'
+			dataType: 'text'
 		});
 		
 		requestDiskSpaceUsage.done(function(data) {
+			//var jsString = String(new java.lang.String(data));
 			var line = "<tr>";
-			alert(data);
-			for(var value in data) {
+				line += "<td>" + data + "</td>";
+
+			//alert(data);
+			/*for(var value in data) {
 				//alert("value : " + value);
 			}
-			list = "<ul><li>coucou</li><li>Bouh</li></ul>";
-			$('#listDisk').html(list);
+			list = "<ul><li>coucou</li><li>Bouh</li></ul>";*/
+			$('#listDisk').html(line);
 		});
 
 	});
