@@ -74,6 +74,9 @@
 									<th>Used space</th>
 									<th>Percent used</th>
 								</tr>
+								<div id="listDisk">
+
+								</div>
 							</thead>
 						</table>
 					</div>

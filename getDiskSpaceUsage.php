@@ -14,7 +14,7 @@
 	$result = socket_connect($socket, $ip_host, $port) or die("Could not connect to server\n"); 
 
 	// Récupération du nombre de disques présents
-	$getNbDisks = "DiskSpaceUsage--getNumberDisks--0\n";
+	$getNbDisks = "DiskSpaceUsage--getDiskName--0\n";
 	socket_write($socket, $getNbDisks, strlen($getNbDisks)) or die("Could not send data to server\n");
 	$result = socket_read($socket, 2048, PHP_NORMAL_READ);
 
