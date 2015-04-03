@@ -6,9 +6,6 @@
 		<link rel="stylesheet" type="text/css" href="./style.css">
 		<link rel="stylesheet" type="text/css" href="./Foundation/css/foundation.css">
 		<link rel="stylesheet" type="text/css" href="./Foundation/css/foundation-icons.css">
-		<script src="./Foundation/js/vendor/modernizr.js"></script>
-		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-		<script src="./ajax-functions.js"></script>
 	</head>
 
 	<body>
@@ -118,6 +115,9 @@
 				</div>
 			</div>
 		</div>
+		<script src="./Foundation/js/vendor/modernizr.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="./ajax-functions.js"></script>
 
 	</body>
 </html>

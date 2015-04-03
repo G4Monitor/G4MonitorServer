@@ -1,13 +1,16 @@
 <?php
+	require "conf.php" ;
+	
+	$host = new Config;
 
-	$host = '127.0.0.1';
-	$port    = 4444;
+	$ip_host = $host->setIpHost('192.168.31.182');
+	$port    = $host->setPort(4445);
 
 	// create socket
 	$socket = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
 
 	// connect to server
-	$result = socket_connect($socket, $host, $port) or die("Could not connect to server\n"); 
+	$result = socket_connect($socket, $ip_host, $port) or die("Could not connect to server\n"); 
 
 	$getTotalRAM = "RAM--getPercentUsedRAM\n";
 	socket_write($socket, $getTotalRAM, strlen($getTotalRAM)) or die("Could not send data to server\n");

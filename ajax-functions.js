@@ -1,14 +1,8 @@
 $(document).ready(function() {
+	var premierChargement = true;
 
-	$('#refresh').click(function() {
-
-		$('#refreshLogo').animateRotate(360, {
-			duration: 500,
-			easing: 'linear',
-			complete: function () {},
-			step: function () {}
-		});
-
+	function loadData()
+	{
 		// RAM
 		var request = $.ajax({
 			url: "getRAM.php",
@@ -45,13 +39,31 @@ $(document).ready(function() {
 		
 		requestDiskSpaceUsage.done(function(data) {
 			var line = "<tr>";
-			alert(data);
+			// alert(data);
 			for(var value in data) {
 				//alert("value : " + value);
 			}
 			list = "<ul><li>coucou</li><li>Bouh</li></ul>";
 			$('#listDisk').html(list);
 		});
+	}
+
+	if(premierChargement)
+	{
+		loadData();
+		premierChargement = false;
+	}
+
+	$('#refresh').click(function() {
+
+		$('#refreshLogo').animateRotate(360, {
+			duration: 500,
+			easing: 'linear',
+			complete: function () {},
+			step: function () {}
+		});
+
+		loadData();
 
 	});
 
