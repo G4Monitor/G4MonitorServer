@@ -14,14 +14,40 @@
 	$result = socket_connect($socket, $ip_host, $port) or die("Could not connect to server\n"); 
 
 	// Récupération du nombre de disques présents
-	$getNbDisks = "DiskSpaceUsage--getDiskName--0\n";
+	$getNbDisks = "DiskSpaceUsage--getNumberDisks\n";
 	socket_write($socket, $getNbDisks, strlen($getNbDisks)) or die("Could not send data to server\n");
-	$result = socket_read($socket, 2048, PHP_NORMAL_READ);
+	$nbDisks = $result = socket_read($socket, 2048, PHP_NORMAL_READ);
+	
+	$response = array();
+
+	for($i = 0 ; $i < $nbDisks ; $i++) {
+		$getDiskName = "DiskSpaceUsage--getDiskName--". $i ."\n";
+		$getDiskTotalSpace = "DiskSpaceUsage--getDiskTotalSpace--". $i ."\n";
+		$getDiskUsedSpace = "DiskSpaceUsage--getDiskUsedSpace--". $i ."\n";
+		
+		socket_write($socket, $getDiskName, strlen($getDiskName)) or die("Could not send data to server\n");
+		$result_disk_name = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+		socket_write($socket, $getDiskUsedSpace, strlen($getDiskUsedSpace)) or die("Could not send data to server\n");
+		$result_used_space = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+		socket_write($socket, $getDiskTotalSpace, strlen($getDiskTotalSpace)) or die("Could not send data to server\n");
+		$result_total_space = socket_read($socket, 2048, PHP_NORMAL_READ);
+		//var_dump($result);
+		$response[$i]["name"][] = $result_disk_name ;
+		$response[$i]["total_space"]= $result_total_space ;
+		$response[$i]["used_space"]= $result_used_space ;
+	}
+
+	// var_dump($response);
+	$response = json_encode($response);
+
+	
 
 	// Récupération des informations sur chaque disque
 
 	// close socket
 	socket_close($socket);
 	
-	echo $result;
+	echo $response;
 ?>

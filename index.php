@@ -66,7 +66,7 @@
 						<h4 class="text-center">Disk space usage</h4>
 					</div>
 					<div class="">
-						<table>
+						<table id="listDisk">
 							<thead>
 								<tr>
 									<th>Disk name</th>
@@ -74,9 +74,6 @@
 									<th>Used space</th>
 									<th>Percent used</th>
 								</tr>
-								<div id="listDisk">
-
-								</div>
 							</thead>
 						</table>
 					</div>
