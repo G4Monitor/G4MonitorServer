@@ -24,6 +24,7 @@
 		$getDiskName = "DiskSpaceUsage--getDiskName--". $i ."\n";
 		$getDiskTotalSpace = "DiskSpaceUsage--getDiskTotalSpace--". $i ."\n";
 		$getDiskUsedSpace = "DiskSpaceUsage--getDiskUsedSpace--". $i ."\n";
+		$getDiskPercentUsed = "DiskSpaceUsage--getDiskPercentUsed--". $i ."\n";
 		
 		socket_write($socket, $getDiskName, strlen($getDiskName)) or die("Could not send data to server\n");
 		$result_disk_name = socket_read($socket, 2048, PHP_NORMAL_READ);
@@ -33,10 +34,15 @@
 
 		socket_write($socket, $getDiskTotalSpace, strlen($getDiskTotalSpace)) or die("Could not send data to server\n");
 		$result_total_space = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+		socket_write($socket, $getDiskPercentUsed, strlen($getDiskPercentUsed)) or die("Could not send data to server\n");
+		$result_percent_used = socket_read($socket, 2048, PHP_NORMAL_READ);
 		//var_dump($result);
 		$response[$i]["name"][] = $result_disk_name ;
 		$response[$i]["total_space"]= $result_total_space ;
 		$response[$i]["used_space"]= $result_used_space ;
+		$response[$i]["percent_used"]= $result_percent_used ;
+
 	}
 
 	// var_dump($response);

@@ -43,39 +43,23 @@ $(document).ready(function() {
 
 			// alert(name_disk);
 			// alert(total_space);
+	
 
-			var	listDisk = "";
+			var	listDisk = '<tbody>';
 			for (var i = 0; i < data.length; i++) {	
-				listDisk += "<tbody><tr>";
-				listDisk += "<td>" + data[i]['name'] +"</td>";
-				listDisk += "<td>" + data[i]['total_space'] +"</td>";
-				listDisk += "<td> " + data[i]['used_space'] +"</td>";
-				listDisk += "<td> Total Space</td>";
-				listDisk += "</tr></tbody>";
+				listDisk += '<tr class="text-center">';
+				listDisk += '<td>' + data[i]['name'] +'</td>';
+				listDisk += '<td class="progress"> <span class="meter" style="width:'+data[i]['percent_used']+'%;"></span></td></tr>';
 			}
 
-			/*$.each(data, function(key, value) {
-				/*console.log(key + " : ");
-				$.each(key, function(k, v) {
-					console.log(v);
-				});*/
-				/*if(key == "name") {
-					console.log(value);
-				}
-			});*/
+			listDisk += '</tbody>';
+
+
+
 
 
 			
 			$('#listDisk').append(listDisk);
-			//var jsString = String(new java.lang.String(data));
-			// var line = "<tr>";
-			// alert(data);
-				// line += "<td>" + data + "</td>";
-
-			//alert(data);
-				//alert("value : " + value);
-			 // list = "<ul><li>coucou</li><li>Bouh</li></ul>";
-			// $('#listDisk').html(line + "</tr>");
 		});
 	}
 

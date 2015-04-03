@@ -26,6 +26,24 @@ Class Config
 		return $this->port = $value;
 	}
 
+	function addIpToMonitor($ips)
+	{
+		$ipHost = array();
+		if($this->ip_host)
+			$ipHost[] = $ip_host;
+		if(is_array($ips))
+		{
+			foreach ($ips as $key => $ip) {
+				$ipHost[] = $ip;
+			}
+		}
+		else {
+		 	$ipHost[] = $ip;
+		 } 
+
+		 return $ipHost;
+	}
+
 
 }
 
