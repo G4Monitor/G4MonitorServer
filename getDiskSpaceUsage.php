@@ -4,7 +4,7 @@
 	
 	$host = new Config;
 
-	$ip_host = $host->setIpHost('192.168.31.182');
+	$ip_host = $host->setIpHost('192.168.1.20');
 	$port    = $host->setPort(4445);
 
 	// create socket
@@ -22,12 +22,20 @@
 
 	for($i = 0 ; $i < $nbDisks ; $i++) {
 		$getDiskName = "DiskSpaceUsage--getDiskName--". $i ."\n";
+		$getDiskTypeName = "DiskSpaceUsage--getDiskTypeName--". $i ."\n";
+		$getDiskSystemTypeName = "DiskSpaceUsage--getDiskSystemTypeName--". $i ."\n";
 		$getDiskTotalSpace = "DiskSpaceUsage--getDiskTotalSpace--". $i ."\n";
 		$getDiskUsedSpace = "DiskSpaceUsage--getDiskUsedSpace--". $i ."\n";
 		$getDiskPercentUsed = "DiskSpaceUsage--getDiskPercentUsed--". $i ."\n";
 		
 		socket_write($socket, $getDiskName, strlen($getDiskName)) or die("Could not send data to server\n");
 		$result_disk_name = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+		socket_write($socket, $getDiskTypeName, strlen($getDiskTypeName)) or die("Could not send data to server\n");
+		$result_disk_type = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+		socket_write($socket, $getDiskSystemTypeName, strlen($getDiskSystemTypeName)) or die("Could not send data to server\n");
+		$result_disk_type_name = socket_read($socket, 2048, PHP_NORMAL_READ);
 
 		socket_write($socket, $getDiskUsedSpace, strlen($getDiskUsedSpace)) or die("Could not send data to server\n");
 		$result_used_space = socket_read($socket, 2048, PHP_NORMAL_READ);
@@ -38,10 +46,12 @@
 		socket_write($socket, $getDiskPercentUsed, strlen($getDiskPercentUsed)) or die("Could not send data to server\n");
 		$result_percent_used = socket_read($socket, 2048, PHP_NORMAL_READ);
 		//var_dump($result);
-		$response[$i]["name"][] = $result_disk_name ;
-		$response[$i]["total_space"]= $result_total_space ;
-		$response[$i]["used_space"]= $result_used_space ;
-		$response[$i]["percent_used"]= $result_percent_used ;
+		$response[$i]["name"][] = $result_disk_name;
+		$response[$i]["disk_type"] = $result_disk_type;
+		$response[$i]["disk_type_name"] = $result_disk_type_name;
+		$response[$i]["total_space"]= str_replace(CHR(10), "", $result_total_space);
+		$response[$i]["used_space"]= str_replace(CHR(10), "", $result_used_space);
+		$response[$i]["percent_used"]= str_replace(CHR(10), "", $result_percent_used);
 
 	}
 

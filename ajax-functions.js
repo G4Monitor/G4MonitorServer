@@ -43,21 +43,20 @@ $(document).ready(function() {
 
 			// alert(name_disk);
 			// alert(total_space);
-	
 
-			var	listDisk = '<tbody>';
+			$('#listDisk').text('');
+			var	listDisk = '';
 			for (var i = 0; i < data.length; i++) {	
+
+				currentDisk = data[i];
 				listDisk += '<tr class="text-center">';
-				listDisk += '<td>' + data[i]['name'] +'</td>';
-				listDisk += '<td class="progress"> <span class="meter" style="width:'+data[i]['percent_used']+'%;"></span></td></tr>';
+				listDisk += '<td>' + currentDisk['name'] +'</td>';
+				listDisk += '<td>' + currentDisk['disk_type'] + '/ ' + currentDisk['disk_type_name'] +'</td>';
+				listDisk += '<td class="progress has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
+				listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
+				listDisk += '</td>';
+				listDisk += '</tr>';
 			}
-
-			listDisk += '</tbody>';
-
-
-
-
-
 			
 			$('#listDisk').append(listDisk);
 		});
