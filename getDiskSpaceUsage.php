@@ -4,7 +4,7 @@
 	
 	$host = new Config;
 
-	$ip_host = $host->setIpHost('192.168.1.20');
+	$ip_host = $host->setIpHost('192.168.1.22');
 	$port    = $host->setPort(4445);
 
 	// create socket

@@ -3,6 +3,29 @@ $(document).ready(function() {
 
 	function loadData()
 	{
+
+		//System
+		var systemRequest = $.ajax({
+			url: "getSystemInfo.php",
+			type: 'POST',
+			dataType: 'json'
+		});
+		systemRequest.done(function(data) {
+			$('#osName').text(data['os_name']);
+			$('#osVersion').text(data['os_version']);
+		});
+
+		//Network
+		var systemRequest = $.ajax({
+			url: "getNetworkInfo.php",
+			type: 'POST',
+			dataType: 'json'
+		});
+		systemRequest.done(function(data) {
+			$('#ipAddress').text(data['ip_address']);
+			$('#macAddress').text(data['mac_address']);
+		});
+
 		// RAM
 		var request = $.ajax({
 			url: "getRAM.php",
@@ -52,8 +75,18 @@ $(document).ready(function() {
 				listDisk += '<tr class="text-center">';
 				listDisk += '<td>' + currentDisk['name'] +'</td>';
 				listDisk += '<td>' + currentDisk['disk_type'] + '/ ' + currentDisk['disk_type_name'] +'</td>';
-				listDisk += '<td class="progress has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
-				listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
+				if(currentDisk['percent_used'] < 70) {
+					listDisk += '<td class="progress success has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
+					listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
+				}
+				else if(currentDisk['percent_used'] < 95) {
+					listDisk += '<td class="progress has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
+					listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
+				}
+				else {
+					listDisk += '<td class="progress alert has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
+					listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
+				}
 				listDisk += '</td>';
 				listDisk += '</tr>';
 			}

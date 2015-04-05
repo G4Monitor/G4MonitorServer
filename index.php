@@ -17,14 +17,7 @@
 		</div>
 
 		<div class="row">
-			<div class="large-10 columns">
-				<h4>Computer : Robin-Portable</h4>
-				<ul>
-					<li>IP Address : 192.168.31.5</li>
-					<li>MAC Address : bec2:a884e:bec2:a884e:bec2:a884e
-				</ul>
-			</div>
-			<div class="large-2 columns">
+			<div class="large-2 large-offset-10 columns">
 				<div id="refresh" class="panel text-center cursor-pointer">
 					<h5>Refresh</h5>
 					<h1 id="refreshLogo">
@@ -66,7 +59,7 @@
 						<h4 class="text-center">Disk space usage</h4>
 					</div>
 					<div class="large-12">
-						<table>
+						<table class="large-12">
 							<thead>
 								<tr>
 									<th>Disk name</th>
@@ -84,14 +77,24 @@
 			<div class="large-3 columns">
 				<div class="panel radius">
 					<div class="large-12">
-						<h4 class="text-center">RAM</h4>
+						<h4 class="text-center">OS</h4>
+					</div>
+					<div class="large-12 text-center">
+						<span id="osName"></span><br/>
+						Version <span id="osVersion"></span>
 					</div>
 				</div>
 			</div>
 			<div class="large-3 columns">
 				<div class="panel radius">
 					<div class="large-12">
-						<h4 class="text-center">RAM</h4>
+						<h4 class="text-center">Network</h4>
+					</div>
+					<div class="large-12">
+						<ul>
+							<li>IP address : <span id="ipAddress"></span></li>
+							<li>MAC address : <span id="macAddress"></span></li>
+						</ul>
 					</div>
 				</div>
 			</div>
