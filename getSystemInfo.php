@@ -22,6 +22,10 @@
 	socket_write($socket, $getOSVersion, strlen($getOSVersion)) or die("Could not send data to server\n");
 	$response['os_version'] = socket_read($socket, 2048, PHP_NORMAL_READ);
 
+	$getProcessor = "SystemInfo--getArch\n";
+	socket_write($socket, $getProcessor, strlen($getProcessor)) or die("Could not send data to server\n");
+	$response['processor'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+
 	$response = json_encode($response);
 
 	// close socket

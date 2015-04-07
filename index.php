@@ -81,7 +81,8 @@
 					</div>
 					<div class="large-12 text-center">
 						<span id="osName"></span><br/>
-						Version <span id="osVersion"></span>
+						Version <span id="osVersion"></span><br/>
+						Processeur : <span id="processeur"></span>
 					</div>
 				</div>
 			</div>
