@@ -94,6 +94,7 @@
 						<ul>
 							<li>IP address : <span id="ipAddress"></span></li>
 							<li>MAC address : <span id="macAddress"></span></li>
+							<li>Domain name : <span id="domainName"></span></li>
 						</ul>
 					</div>
 				</div>

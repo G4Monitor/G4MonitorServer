@@ -4,7 +4,7 @@
 	
 	$host = new Config;
 
-	$ip_host = $host->setIpHost('192.168.1.22');
+	$ip_host = $host->setIpHost('192.168.31.182');
 	$port    = $host->setPort(4445);
 
 	// create socket
@@ -21,7 +21,7 @@
 	$getOSVersion = "SystemInfo--getOSVersion\n";
 	socket_write($socket, $getOSVersion, strlen($getOSVersion)) or die("Could not send data to server\n");
 	$response['os_version'] = socket_read($socket, 2048, PHP_NORMAL_READ);
-	
+
 	$response = json_encode($response);
 
 	// close socket

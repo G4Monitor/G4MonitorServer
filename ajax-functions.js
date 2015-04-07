@@ -24,6 +24,7 @@ $(document).ready(function() {
 		systemRequest.done(function(data) {
 			$('#ipAddress').text(data['ip_address']);
 			$('#macAddress').text(data['mac_address']);
+			$('#domainName').text(data['domain_name']);
 		});
 
 		// RAM
@@ -79,7 +80,7 @@ $(document).ready(function() {
 					listDisk += '<td class="progress success has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
 					listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
 				}
-				else if(currentDisk['percent_used'] < 95) {
+				else if(currentDisk['percent_used'] < 90) {
 					listDisk += '<td class="progress has-tip" data-tooltip aria-haspopup="true" data-options="show_on:large" title="'+(currentDisk['used_space']/1000000).toFixed(2)+' Go / ' + (currentDisk['total_space']/1000000).toFixed(2) + ' Go">';
 					listDisk += '<span class="meter" style="width: '+ currentDisk['percent_used'] +'%;"></span>';
 				}

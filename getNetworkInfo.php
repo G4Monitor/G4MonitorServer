@@ -4,7 +4,7 @@
 	
 	$host = new Config;
 
-	$ip_host = $host->setIpHost('192.168.1.20');
+	$ip_host = $host->setIpHost('192.168.31.182');
 	$port    = $host->setPort(4445);
 
 	// create socket
@@ -21,6 +21,10 @@
 	$getMACAddress = "NetInfo--getMACAddress\n";
 	socket_write($socket, $getMACAddress, strlen($getMACAddress)) or die("Could not send data to server\n");
 	$response['mac_address'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+	$getDomainName= "NetInfo--getHostName\n";
+	socket_write($socket, $getDomainName, strlen($getDomainName)) or die("Could not send data to server\n");
+	$response['domain_name'] = socket_read($socket, 2048, PHP_NORMAL_READ);
 	
 	$response = json_encode($response);
 
