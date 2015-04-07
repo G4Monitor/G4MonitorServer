@@ -4,6 +4,12 @@ $(document).ready(function() {
 	function loadData()
 	{
 
+		var deviceMAC;
+		var deviceName;
+		var deviceOS;
+		var deviceOSVersion;
+		var deviceProcessor; 
+
 		//System
 		var systemRequest = $.ajax({
 			url: "getSystemInfo.php",
@@ -11,8 +17,12 @@ $(document).ready(function() {
 			dataType: 'json'
 		});
 		systemRequest.done(function(data) {
+			deviceOS = data['os_name'];
+			deviceOSVersion = data['os_version'];
+			deviceProcessor = data['processeur'];
 			$('#osName').text(data['os_name']);
 			$('#osVersion').text(data['os_version']);
+			$('#processeur').text(data['processor']);
 		});
 
 		//Network
@@ -22,6 +32,8 @@ $(document).ready(function() {
 			dataType: 'json'
 		});
 		systemRequest.done(function(data) {
+			deviceMAC = data['mac_address'];
+			deviceName = data['host_name'];
 			$('#ipAddress').text(data['ip_address']);
 			$('#macAddress').text(data['mac_address']);
 			$('#hostName').text(data['host_name']);
@@ -43,6 +55,16 @@ $(document).ready(function() {
 				'width': data + '%'
 			});
 			$('#percentUsedRAM').text(data);
+
+			if(data < 60) {
+				$('#percentUsedRAMBar').addClass("alert");
+			}
+			else if(data < 80) {
+
+			}
+			else {
+
+			}
 		});
 
 		// Uptime
@@ -93,6 +115,25 @@ $(document).ready(function() {
 			
 			$('#listDisk').append(listDisk);
 		});
+
+		setTimeout(function(){
+			var requestSaveData = $.ajax({
+				url: "saveDevice.php",
+				type: 'POST',
+				dataType: 'text',
+				data: {
+					deviceMAC: ''+deviceMAC,
+					deviceName: ''+deviceName,
+					deviceOS: ''+deviceOS,
+					deviceOSVersion: ''+deviceOSVersion,
+					deviceProcessor: ''+deviceProcessor
+				}
+			});
+
+			requestSaveData.done(function(data) {
+				alert('ok!');
+			});
+		}, 1000);
 	}
 
 	if(premierChargement)
