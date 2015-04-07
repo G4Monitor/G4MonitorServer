@@ -9,12 +9,13 @@
 	</head>
 
 	<body>
-
-		<div class="row">
-			<div class="large-12 columns">
-				<h1 class="text-center">G4 Monitor</h1>
+		<nav class="top-bar" data-topbar role="navigation" data-options="is_hover: false">
+			<div class="row">
+				<div class="large-12 columns">
+					<a href="#"> G4 Monitor </a>
+				</div>
 			</div>
-		</div>
+		</nav>
 
 		<div class="row">
 			<div class="large-2 large-offset-10 columns">
@@ -103,10 +104,75 @@
 					</div>
 				</div>
 			</div>
+			<div class="large-3 columns">
+				<div class="panel radius">
+					<div class="large-12">
+						<h4 class="text-center">RAM</h4>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 columns">
+				<div class="panel radius">
+					<div class="large-12">
+						<h4 class="text-center">RAM</h4>
+					</div>
+				</div>
+			</div>
+			<div class="large-3 columns">
+				<div class="panel radius">
+					<div class="large-12">
+						<h4 class="text-center">RAM</h4>
+					</div>
+				</div>
+			</div>
+			<div id="line_top_x"></div>
 		</div>
+
+
+
 		<script src="./Foundation/js/vendor/modernizr.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script src="./ajax-functions.js"></script>
+
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1.1', {packages: ['line']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'Day');
+      data.addColumn('number', 'percentUsedRAM');
+
+      data.addRows([
+        [1,  37.8],
+        [2,  30.9],
+        [3,  25.4],
+        [4,  11.7],
+        [5,  11.9],
+        [6,   8.8],
+        [7,   7.6]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Used Ram',
+          subtitle: 'in Percent'
+        },
+        axes: {
+          x: {
+            0: {side: 'bottom'}
+          }
+        }
+      };
+
+      var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
 
 	</body>
 </html>
