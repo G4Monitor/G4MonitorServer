@@ -22,9 +22,25 @@
 	socket_write($socket, $getMACAddress, strlen($getMACAddress)) or die("Could not send data to server\n");
 	$response['mac_address'] = socket_read($socket, 2048, PHP_NORMAL_READ);
 
-	$getDomainName= "NetInfo--getHostName\n";
-	socket_write($socket, $getDomainName, strlen($getDomainName)) or die("Could not send data to server\n");
-	$response['domain_name'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+	$getHostName= "NetInfo--getHostName\n";
+	socket_write($socket, $getHostName, strlen($getHostName)) or die("Could not send data to server\n");
+	$response['host_name'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+	$getNetmask= "NetInfo--getNetmask\n";
+	socket_write($socket, $getNetmask, strlen($getNetmask)) or die("Could not send data to server\n");
+	$response['netmask'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+	$getDefaultGateway= "NetInfo--getNetmask\n";
+	socket_write($socket, $getDefaultGateway, strlen($getDefaultGateway)) or die("Could not send data to server\n");
+	$response['default_gateway'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+	$getPrimaryDNS= "NetInfo--getPrimaryDNS\n";
+	socket_write($socket, $getPrimaryDNS, strlen($getPrimaryDNS)) or die("Could not send data to server\n");
+	$response['primary_dns'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+
+	$getSecondaryDNS= "NetInfo--getSecondaryDNS\n";
+	socket_write($socket, $getSecondaryDNS, strlen($getSecondaryDNS)) or die("Could not send data to server\n");
+	$response['secondary_dns'] = socket_read($socket, 2048, PHP_NORMAL_READ);
 	
 	$response = json_encode($response);
 

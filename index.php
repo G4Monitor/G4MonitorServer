@@ -94,29 +94,12 @@
 						<ul>
 							<li>IP address : <span id="ipAddress"></span></li>
 							<li>MAC address : <span id="macAddress"></span></li>
-							<li>Domain name : <span id="domainName"></span></li>
+							<li>Host name : <span id="hostName"></span></li>
+							<li>Netmask : <span id="netmask"></span></li>
+							<li>Default gateway : <span id="defaultGateway"></span></li>
+							<li>Primary DNS : <span id="primaryDNS"></span></li>
+							<li>Secondary DNS : <span id="secondaryDNS"></span></li>
 						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="large-3 columns">
-				<div class="panel radius">
-					<div class="large-12">
-						<h4 class="text-center">RAM</h4>
-					</div>
-				</div>
-			</div>
-			<div class="large-3 columns">
-				<div class="panel radius">
-					<div class="large-12">
-						<h4 class="text-center">RAM</h4>
-					</div>
-				</div>
-			</div>
-			<div class="large-3 columns">
-				<div class="panel radius">
-					<div class="large-12">
-						<h4 class="text-center">RAM</h4>
 					</div>
 				</div>
 			</div>

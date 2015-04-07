@@ -24,7 +24,11 @@ $(document).ready(function() {
 		systemRequest.done(function(data) {
 			$('#ipAddress').text(data['ip_address']);
 			$('#macAddress').text(data['mac_address']);
-			$('#domainName').text(data['domain_name']);
+			$('#hostName').text(data['host_name']);
+			$('#netmask').text(data['netmask']);
+			$('#defaultGateway').text(data['default_gateway']);
+			$('#primaryDNS').text(data['primary_dns']);
+			$('#secondaryDNS').text(data['secondary_dns']);
 		});
 
 		// RAM
@@ -62,11 +66,6 @@ $(document).ready(function() {
 		});
 		
 		requestDiskSpaceUsage.done(function(data) {
-			// var name_disk = data['name'];
-			// var total_space = data['total_space'];
-
-			// alert(name_disk);
-			// alert(total_space);
 
 			$('#listDisk').text('');
 			var	listDisk = '';
