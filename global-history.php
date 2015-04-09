@@ -44,7 +44,18 @@
 				<label>Info</label>
 			</a>
 		</div>
-		
+		<?php
+		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$last_alerts = array();
+		$sql = "SELECT allocationDate, percentUsedRAM FROM ram WHERE percentUsedRAM > 50 LIMIT 10 ";
+		$rq = $bdd->prepare($sql);
+		$rq->execute();
+		$rq->setFetchMode(PDO::FETCH_OBJ);
+		while( $r = $rq->fetch() )
+		{
+			$last_alerts[] = array("date" => $r->allocationDate, "percentUsedRAM" => $r->allocationDate);
+		}
+		?>
 		<div data-equalizer>
 			<div class="large-4 columns">
 				<div class="panel" data-equalizer-watch>
@@ -62,21 +73,18 @@
 										</tr>
 									</thead>
 									<tbody>
+										<?php
+										foreach ($last_alerts as $last_alert) 
+										{
+										?>
 										<tr>
-											<td class="large-4 columns">2014-04-09</td>
+											<td class="large-4 columns"><<?php echo substr($last_alert['date'], 0, 10) ;?></td>
 											<td class="large-4 columns">RAM</td>
 											<td class="large-4 columns text-alert">Unsolved</td>
 										</tr>
-										<tr>
-											<td class="large-4 columns">2014-04-09</td>
-											<td class="large-4 columns">RAM</td>
-											<td class="large-4 columns text-success">Solved</td>
-										</tr>
-										<tr>
-											<td class="large-4 columns">2014-04-09</td>
-											<td class="large-4 columns">RAM</td>
-											<td class="large-4 columns text-success">Solved</td>
-										</tr>
+										<?php
+										}
+										?>
 									</tbody>
 								</table>
 							</div>

@@ -38,7 +38,7 @@
 					<i class="fi-graph-bar"></i>
 					<label>Global history</label>
 				</a>
-				<a class="item" href="#">
+				<a class="item" href="options.php">
 					<i class="fi-wrench"></i>
 					<label>Options</label>
 				</a>
@@ -204,11 +204,12 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="large-12 text-right">
-				<a href="disconnect.php" class="button"> Log out </a>
-			</div>	
+		<footer class="footer">
+		<div class="row text-right">
+
+				<a href="disconnect.php" style="font-size: 1.5em;"> Log out </a>
 		</div>
+		</footer>
 
 	</body>
 </html>
