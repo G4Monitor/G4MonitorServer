@@ -1,4 +1,6 @@
-
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -32,11 +34,11 @@
 				<i class="fi-eye"></i>
 				<label>Scan network</label>
 			</a>
-			<a class="item active" href="global-history.php">
+			<a class="item " href="global-history.php">
 				<i class="fi-graph-bar"></i>
 				<label>Global history</label>
 			</a>
-			<a class="item" href="options.php">
+			<a class="item active" href="options.php">
 				<i class="fi-wrench"></i>
 				<label>Options</label>
 			</a>
@@ -47,11 +49,36 @@
 		</div>
 
 		<div class="row">
+			<div class="large-8">
+				<?php 
+				if(isset($_GET['modify']) && $_GET['modify'])
+				{
+				?>
+					<div data-alert class="alert-box success radius">
+					  Informations have been modified
+					  <a href="#" class="close">&times;</a>
+					</div>
+				<?php
+				} else if(isset($_GET['modify']) && !$_GET['modify'])
+				{
+				?>
+					<div data-alert class="alert-box warning radius">
+					  An error occured or fields were empty
+					  <a href="#" class="close">&times;</a>
+					</div>
+				<?php
+				}
+				?>
+			</div>
+		</div>
+
+		<div class="row">
 			<h3 class="text-white">Change some informations</h3>
 		</div>
+		<br/>
 		<div class="row">
 			<div class="large-8">
-				<form action="change_info.php" method="POST">
+				<form action="modify_info.php" method="POST">
 					<label class="text-white text-center"> Login
 						<input type="text" name="login">
 					</label>
@@ -59,9 +86,11 @@
 					<label class="text-white text-center"> Password
 						<input type="text" name="password">
 					</label>
+					<br/>
 					<label class="text-white text-center"> Add someone more to inform
 						<input type="text" name="email">
-					<label>
+					</label>
+					<input class="button" type="submit" value="Modify">
 				<form>
 			</div>
 		</div>

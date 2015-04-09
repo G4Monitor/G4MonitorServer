@@ -1,4 +1,7 @@
 <?php
+include "config.php";
+
+$config = new Config;
 
 	date_default_timezone_set('Europe/Paris');
 
@@ -17,6 +20,6 @@
 
 	$subject = 'G4Monitor : Erreur ' . $errorType;
 	$message = 'Hello, An error as occured on a monitored device : Device : ' . $deviceMac . ', Error type : ' . $errorType . '.';
-	mail('rbilly.mail@gmail.com', $subject , $message );
+	mail($config->email_adress_to_inform(), $subject , $message );
 
 ?>

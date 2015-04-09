@@ -47,7 +47,7 @@
 		<?php
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$last_alerts = array();
-		$sql = "SELECT allocationDate, percentUsedRAM FROM ram WHERE percentUsedRAM > 50 LIMIT 10 ";
+		$sql = "SELECT type, state FROM error LIMIT 10 ";
 		$rq = $bdd->prepare($sql);
 		$rq->execute();
 		$rq->setFetchMode(PDO::FETCH_OBJ);
@@ -98,12 +98,32 @@
 					<hr/>
 					<div class="row">
 						<div class="large-6 columns">
+							<?php 
+								$sql = "SELECT deviceMac FROM device WHERE deviceMac != 'undefined' ";
+								$rq = $bdd->prepare($sql);
+								$rq->execute();
+								$nbDevices = $rq->rowCount();
+				
+							?>
 							<strong>Devices registered :</strong><br/>
-							64
+							<?php echo $nbDevices ;?>
 						</div>
 						<div class="large-6 columns">
+							<?php 
+							$sql = "SELECT id FROM error ";
+								$rq = $bdd->prepare($sql);
+								$rq->execute();
+								$total_errors_detected = $rq->rowCount();
+
+
+								$sql = "SELECT id FROM error WHERE state = 'solved' ";
+								$rq = $bdd->prepare($sql);
+								$rq->execute();
+								$total_errors_solved = $rq->rowCount();
+
+							?>
 							<strong>Errors solved/detected :</strong><br/>
-							12 / 17
+							<?php echo $total_errors_solved .' / '.  $total_errors_detected; ?>	
 						</div>
 					</div>
 				</div>
@@ -113,6 +133,18 @@
 					<h3 class="text-center">Fast network map</h3>
 					<hr/>
 					<div class="scrollableDiv">
+						<?php 
+						$last_updates = array();
+						$sql = "SELECT d.deviceName, a.IPAddress, a.allocationDate FROM device d LEFT JOIN allocation a ON d.deviceMac = a.deviceMac LIMIT 10";
+						$rq = $bdd->prepare($sql);
+						$rq->execute();
+						$rq->setFetchMode(PDO::FETCH_OBJ);
+						while( $r = $rq->fetch() )
+						{
+							$last_updates[] = array("date" => $r->allocationDate, "deviceName" => $r->deviceName, "ip_adress" => $r->IPAddress );
+						}
+
+						?>
 						<table class="large-12">
 							<thead>
 								<tr>
@@ -122,26 +154,17 @@
 								</tr>
 							</thead>
 							<tbody>
+								<?php 
+								foreach ($last_updates as $last_update) {
+								?>
 								<tr>
-									<td class="large-4 columns">PortableRobin</td>
-									<td class="large-4 columns">2014-04-09</td>
-									<td class="large-4 columns">192.168.31.182</td>
+									<td class="large-4 columns"><?php echo $last_update['deviceName'] ?></td>
+									<td class="large-4 columns"><?php echo substr($last_update['date'], 0, 10) ;?></td>
+									<td class="large-4 columns"><?php echo $last_update['ip_adress'] ?></td>
 								</tr>
-								<tr>
-									<td class="large-4 columns">PortableRobin</td>
-									<td class="large-4 columns">2014-04-09</td>
-									<td class="large-4 columns">192.168.31.182</td>
-								</tr>
-								<tr>
-									<td class="large-4 columns">PortableRobin</td>
-									<td class="large-4 columns">2014-04-09</td>
-									<td class="large-4 columns">192.168.31.182</td>
-								</tr>
-								<tr>
-									<td class="large-4 columns">PortableRobin</td>
-									<td class="large-4 columns">2014-04-09</td>
-									<td class="large-4 columns">192.168.31.182</td>
-								</tr>
+								<?php
+								}
+								?>
 							</tbody>
 						</table>
 					</div>
@@ -153,7 +176,18 @@
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
        <div id="chart_div" style="width: 100%; height: 500px;"></div>
 
+       	<?php
+       	$stats_ram = array(); 
+       	$sql = "SELECT AVG(percentUsedRAM) as average, SUBSTR(allocationDate, 1, 10) as date FROM ram WHERE deviceMac != 'undefined' GROUP BY SUBSTR(allocationDate, 1, 10) ";
+		$rq = $bdd->prepare($sql);
+		$rq->execute();
+		$rq->setFetchMode(PDO::FETCH_OBJ);
+		while( $r = $rq->fetch() )
+		{
+			$stats_ram[] = array("average" => $r->average, "date" => $r->date);
+		}
 
+       	?>
 		<footer class="footer">
 		<div class="row text-right">
 
@@ -164,22 +198,14 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Date', 'RAM'],
-          ['2015-04-09',  57],
-          ['2015-04-09',  11],
-          ['2015-04-09',  57],
-          ['2015-04-09',  32],
-             ['2015-04-09',  25],
-          ['2015-04-09',  47],
-          ['2015-04-09',  86],
-          ['2015-04-09',  89],
-             ['2015-04-09',  18],
-          ['2015-04-09',  0],
-          ['2015-04-09',  31],
-          ['2015-04-09',  24],
-             ['2015-04-09',  36],
-          ['2015-04-09',  58],
-          ['2015-04-09',  64],
-          ['2015-04-09',  97],
+          <?php 
+       		 foreach ($stats_ram as $stat_ram) {
+       		 ?>
+          ['<?php echo $stat_ram['date'] ?>', <?php echo $stat_ram['average'] ?>],
+          <?php 
+      		}
+      	?>
+          
         ]);
 
         var options = {

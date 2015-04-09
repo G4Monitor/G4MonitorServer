@@ -1,3 +1,6 @@
+<?php 
+require "verif_if_logged.php";
+?>
 <!DOCTYPE html>
 <html>
 	<head>
