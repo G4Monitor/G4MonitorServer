@@ -90,20 +90,22 @@ $(document).ready(function() {
 			});
 			$('#percentUsedRAM').text(data['percent_used_ram']);
 
-			if(data['percent_used_ram'] < 50) {
+			if(data['percent_used_ram'] < 20) {
 				$('#percentUsedRAMParent').addClass("success");
 			}
-			else if(data['percent_used_ram'] >= 80) {
-				$('#percentUsedRAMParent').addClass("alert");
-				var requestSendAlertRAM = $.ajax({
-					url: "send-alertphp",
-					type: 'POST',
-					data: {
-						deviceMac: deviceMAC,
-						errorType: 'RAM'
-					},
-					dataType: 'text'
-				});
+			else if(data['percent_used_ram'] >= 30) {
+				setTimeout(function(){
+					$('#percentUsedRAMParent').addClass("alert");
+					var requestSendAlertRAM = $.ajax({
+						url: "send-alert.php",
+						type: 'POST',
+						data: {
+							deviceMac: deviceMAC,
+							errorType: 'RAM'
+						},
+						dataType: 'text'
+					});
+				}, 4000);
 			}
 			$('#usedRAM').text(((data['used_ram']*1024)/1073741824).toFixed(2));
 			$('#totalRAM').text(((data['total_ram']*1024)/1073741824).toFixed(2));
