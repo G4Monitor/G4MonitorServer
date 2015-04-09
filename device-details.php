@@ -86,7 +86,7 @@
 						<h5 class="text-center">Random Access Memory</h5>
 						<hr/>
 						<div class="large-9 columns">
-							<div class="progress large-12">
+							<div id="percentUsedRAMParent" class="progress large-12">
 								<span id="percentUsedRAMBar" class="meter" style="width: 0.0%"></span>
 							</div>
 						</div>
