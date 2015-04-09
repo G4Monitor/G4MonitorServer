@@ -2,11 +2,14 @@
 	cursor: pointer;
 }
 
-.fullWidth{
+.footer{
+	background-color: #333; 
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	max-width: initial;
+	position:absolute;
+	bottom: 0;
 }
 
 body {

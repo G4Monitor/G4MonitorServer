@@ -21,7 +21,7 @@ require "verif_if_logged.php";
 
 		<div class="icon-bar six-up" style="height: 107px;">
 			
-			<img class="item" src="./img/logo_g4monitor.png" alt="G4Monitor" height="80%"/>
+			<img class="item" src="./img/logo_g4monitor_blanc.png" alt="G4Monitor" height="80%"/>
 			<a class="item active" href="index.php">
 				<i class="fi-home"></i>
 				<label>Home</label>
@@ -48,14 +48,22 @@ require "verif_if_logged.php";
 			<h1 class="text-white">Welcome</h1>
 			<h3 class="text-white">On G4Monitor</h3>
 
-			<h4 class="text-white">Do not lose sight of the priorities</h4>
 		</div>
 
-		<div class="row">
-			<div class="large-12 text-right">
-				<a href="disconnect.php" class="button"> Log out </a>
-			</div>	
-		</div> 
-
+				
+		 
+		<footer>
+			<div class="footer">
+				<div class="large-5 columns slogan">
+					<h6 class="text-white"><i> " Do not lose sight of the priorities "</i></h6>
+				</div>
+				<div class="large-5 columns text-white">
+					Copyright RO(B|MA)IN &copy;
+				</div>
+				<div class="large-2 columns">
+					<a href="disconnect.php" class="log_out"> Log out </a>
+				</div>
+			<div>	
+		</footer>
 	</body>
 </html>
