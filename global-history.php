@@ -47,13 +47,13 @@
 		<?php
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$last_alerts = array();
-		$sql = "SELECT type, state FROM error LIMIT 10 ";
+		$sql = "SELECT type, state, errorDate FROM error LIMIT 10 ";
 		$rq = $bdd->prepare($sql);
 		$rq->execute();
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )
 		{
-			$last_alerts[] = array("type" => $r->type, "state" => $r->state);
+			$last_alerts[] = array("type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate);
 		}
 		?>
 		<div data-equalizer>
@@ -78,7 +78,7 @@
 										{
 										?>
 										<tr>
-											<td class="large-4 columns"><?php echo "Date a récupérer dans la BDD" ;//substr($last_alert['date'], 0, 10) ;?></td>
+											<td class="large-4 columns"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></td>
 											<td class="large-4 columns"><?php echo $last_alert['type'] ?></td>
 											<td class="large-4 columns text-alert"><?php echo $last_alert['state'] ?></td>
 										</tr>
@@ -141,7 +141,7 @@
 						$rq->setFetchMode(PDO::FETCH_OBJ);
 						while( $r = $rq->fetch() )
 						{
-							$last_updates[] = array("date" => $r->allocationDate, "deviceName" => $r->deviceName, "ip_adress" => $r->IPAddress );
+							$last_updates[] = array("date" => $r->allocationDate, "deviceName" => $r->deviceName, "ip_address" => $r->IPAddress );
 						}
 
 						?>
@@ -160,7 +160,7 @@
 								<tr>
 									<td class="large-4 columns"><?php echo $last_update['deviceName'] ?></td>
 									<td class="large-4 columns"><?php echo substr($last_update['date'], 0, 10) ;?></td>
-									<td class="large-4 columns"><?php echo $last_update['ip_adress'] ?></td>
+									<td class="large-4 columns"><?php echo $last_update['ip_address'] ?></td>
 								</tr>
 								<?php
 								}
@@ -177,6 +177,29 @@
        <div id="chart_div" style="width: 100%; height: 500px;"></div>
 
        	<?php
+
+       	$stats_error_total = array(); 
+       	$sql = "SELECT COUNT(*) as nb_errors,  SUBSTR(errorDate, 1, 10) as date FROM error WHERE UNIX_TIMESTAMP(errorDate) + 60*60*24*7 > UNIX_TIMESTAMP(NOW())  GROUP BY SUBSTR(errorDate, 1, 10) ";
+		$rq = $bdd->prepare($sql);
+		$rq->execute();
+		$rq->setFetchMode(PDO::FETCH_OBJ);
+		while( $r = $rq->fetch() )
+		{
+			$stats_error_total[] = array("nb_errors" => $r->nb_errors, "date" => $r->date);
+		}
+
+		$stats_error_solved = array(); 
+       	$sql = "SELECT COUNT(*) as nb_errors_solved,  SUBSTR(errorDate, 1, 10) as date FROM error WHERE  UNIX_TIMESTAMP(errorDate) + 60*60*24*7 > UNIX_TIMESTAMP(NOW()) AND state = 'Solved' GROUP BY SUBSTR(errorDate, 1, 10) ";
+		$rq = $bdd->prepare($sql);
+		$rq->execute();
+		$rq->setFetchMode(PDO::FETCH_OBJ);
+		while( $r = $rq->fetch() )
+		{
+			$stats_error_solved[] = array("nb_errors_solved" => $r->nb_errors_solved, "date" => $r->date);
+		}
+
+
+
        	$stats_ram = array(); 
        	$sql = "SELECT AVG(percentUsedRAM) as average, SUBSTR(allocationDate, 1, 10) as date FROM ram WHERE deviceMac != 'undefined' GROUP BY SUBSTR(allocationDate, 1, 10) ";
 		$rq = $bdd->prepare($sql);
@@ -222,22 +245,35 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Date', 'Errors detected', 'Errors solved'],
-          ['2015-04-09', 0, 0],
-          ['2015-04-09', 1, 1],
-          ['2015-04-09',  5, 2],
-          ['2015-04-09',  0, 0],
-             ['2015-04-09', 0, 0],
-          ['2015-04-09',   0, 2],
-          ['2015-04-09',   0, 1],
-          ['2015-04-09',   5, 4],
-             ['2015-04-09',  2, 2],
-          ['2015-04-09',   0, 1],
-          ['2015-04-09',  0, 0],
-          ['2015-04-09',  1, 1],
-             ['2015-04-09',   1, 0],
-          ['2015-04-09',  1, 1],
-          ['2015-04-09',  1, 2],
-          ['2015-04-09',  0, 0],
+          <?php 
+       		 foreach ($stats_error_total as $stat_error) {
+       		?>
+          ['<?php echo $stat_error['date'] ?>', <?php echo $stat_error['nb_errors'] ?>, 
+          <?php 
+          foreach ($stats_error_solved as $stat_error_solved) 
+          { 
+          	
+          	if(($stat_error_solved['date'] != $stat_error['date'] || isset($nb_errors_solved)) && end($stats_error_solved) != $stat_error_solved) 
+          		continue; 
+          	else if(end($stats_error_solved) == $stat_error_solved && $stat_error_solved['date'] != $stat_error['date'])
+          	{ 
+          		echo 0;
+          	}
+          	else
+          	{
+          		echo $nb_errors_solved = $stat_error_solved['nb_errors_solved'];
+          		unset($nb_errors_solved);
+          		break;
+          	} 
+
+    
+          	
+          }
+ 
+         	?>],
+          <?php 
+      		}
+      	?>
         ]);
 
         var options = {

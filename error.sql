@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 09 Avril 2015 à 17:56
+-- Généré le :  Ven 10 Avril 2015 à 01:26
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -28,12 +28,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `error` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `device_mac_adress` varchar(17) NOT NULL,
+  `device_mac_address` varchar(17) NOT NULL,
   `type` varchar(10) NOT NULL,
   `state` varchar(10) NOT NULL,
+  `errorDate` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `devicde_mac_adress` (`device_mac_adress`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `devicde_mac_adress` (`device_mac_address`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Contenu de la table `error`
+--
+
+INSERT INTO `error` (`id`, `device_mac_address`, `type`, `state`, `errorDate`) VALUES
+(1, '00:50:56:C0:00:01', 'RAM', 'Solved', '2015-04-09 18:14:51'),
+(2, '00:50:56:C0:00:01', 'RAM', 'Unsolved', '2015-04-08 18:22:15'),
+(3, '00:50:56:C0:00:01', 'RAM', 'Solved', '2015-04-08 18:23:07'),
+(4, '00:50:56:C0:00:01', 'RAM', 'Unsolved', '2015-04-09 18:23:34'),
+(5, '00:50:56:C0:00:01', 'RAM', 'Unsolved', '2015-04-07 18:23:57'),
+(6, '00:50:56:C0:00:01', 'RAM', 'Solved', '2015-04-09 18:25:03'),
+(7, '00:87:41:32:03:2D', 'RAM', 'Unsolved', '2015-04-09 18:38:58');
 
 --
 -- Contraintes pour les tables exportées
@@ -43,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `error` (
 -- Contraintes pour la table `error`
 --
 ALTER TABLE `error`
-  ADD CONSTRAINT `FK_device_mac_adress` FOREIGN KEY (`device_mac_adress`) REFERENCES `device` (`deviceMac`);
+  ADD CONSTRAINT `FK_device_mac_adress` FOREIGN KEY (`device_mac_address`) REFERENCES `device` (`deviceMac`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
