@@ -94,7 +94,7 @@ session_start();
                                 
                                 <li class="bullet-item">Online Support</li>
                                 <li class="bullet-item">Response time 48h</li>
-                                <li class="bullet-item">Facilities management/li>
+                                <li class="bullet-item">Facilities management</li>
                                 <li class="cta-button">
                                     <a class="button" href="#">Buy Now</a>
                                 </li> 
