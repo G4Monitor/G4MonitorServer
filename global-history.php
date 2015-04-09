@@ -80,7 +80,7 @@
 										<tr>
 											<td class="large-4 columns"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></td>
 											<td class="large-4 columns"><?php echo $last_alert['type'] ?></td>
-											<td class="large-4 columns text-alert"><?php echo $last_alert['state'] ?></td>
+											<td class="large-4 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><?php echo $last_alert['state'] ?></td>
 										</tr>
 										<?php
 										}
