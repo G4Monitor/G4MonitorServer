@@ -53,7 +53,7 @@
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )
 		{
-			$last_alerts[] = array("date" => $r->allocationDate, "percentUsedRAM" => $r->allocationDate);
+			$last_alerts[] = array("type" => $r->type, "state" => $r->state);
 		}
 		?>
 		<div data-equalizer>
@@ -78,9 +78,9 @@
 										{
 										?>
 										<tr>
-											<td class="large-4 columns"><?php echo substr($last_alert['date'], 0, 10) ;?></td>
-											<td class="large-4 columns">RAM</td>
-											<td class="large-4 columns text-alert">Unsolved</td>
+											<td class="large-4 columns"><?php echo "Date a récupérer dans la BDD" ;//substr($last_alert['date'], 0, 10) ;?></td>
+											<td class="large-4 columns"><?php echo $last_alert['type'] ?></td>
+											<td class="large-4 columns text-alert"><?php echo $last_alert['state'] ?></td>
 										</tr>
 										<?php
 										}
