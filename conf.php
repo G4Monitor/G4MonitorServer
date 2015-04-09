@@ -50,7 +50,7 @@ Class Config
 	{
 		$ret="";
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-		$sql = "SELECT email FROM mailto WHERE sendto = 1"
+		$sql = "SELECT email FROM mailto WHERE sendto = 1";
 		$rq = $bdd->prepare($sql);
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -45,9 +46,35 @@
 			</a>
 		</div>
 
+		<div class="row">
+			<h3 class="text-white">Change some informations</h3>
+		</div>
+		<div class="row">
+			<div class="large-8">
+				<form action="change_info.php" method="POST">
+					<label class="text-white text-center"> Login
+						<input type="text" name="login">
+					</label>
+					<br/>
+					<label class="text-white text-center"> Password
+						<input type="text" name="password">
+					</label>
+					<label class="text-white text-center"> Add someone more to inform
+						<input type="text" name="email">
+					<label>
+				<form>
+			</div>
+		</div>
 
 
 
+
+		<footer class="footer">
+		<div class="row text-right">
+
+				<a href="disconnect.php" style="font-size: 1.5em;"> Log out </a>
+		</div>
+		</footer>
 
 
 	</body>

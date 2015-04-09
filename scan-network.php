@@ -70,11 +70,12 @@ require "verif_if_logged.php";
 			</div>
 		</div>
 
-		<div class="row">
-			<div class="large-12 text-right">
-				<a href="disconnect.php" class="button"> Log out </a>
-			</div>	
-		</div> 
+		<footer class="footer">
+		<div class="row text-right">
+
+				<a href="disconnect.php" style="font-size: 1.5em;"> Log out </a>
+		</div>
+		</footer>
 
 		<script src="./Foundation/js/vendor/modernizr.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
