@@ -8,18 +8,21 @@ $(document).ready(function() {
 		var deviceName;
 		var deviceOS;
 		var deviceOSVersion;
-		var deviceProcessor; 
+		var deviceProcessor;
 
 		//System
 		var systemRequest = $.ajax({
 			url: "getSystemInfo.php",
-			type: 'POST',
+			type: 'GET',
+			data: {
+				ip_host: $_GET['ip_host']
+			},
 			dataType: 'json'
 		});
 		systemRequest.done(function(data) {
 			deviceOS = data['os_name'];
 			deviceOSVersion = data['os_version'];
-			deviceProcessor = data['processeur'];
+			deviceProcessor = data['processor'];
 			$('#osName').text(data['os_name']);
 			$('#osVersion').text(data['os_version']);
 			$('#processeur').text(data['processor']);
@@ -28,7 +31,10 @@ $(document).ready(function() {
 		//Network
 		var systemRequest = $.ajax({
 			url: "getNetworkInfo.php",
-			type: 'POST',
+			type: 'GET',
+			data: {
+				ip_host: $_GET['ip_host']
+			},
 			dataType: 'json'
 		});
 		systemRequest.done(function(data) {
@@ -46,7 +52,10 @@ $(document).ready(function() {
 		// RAM
 		var request = $.ajax({
 			url: "getRAM.php",
-			method: 'POST',
+			type: 'GET',
+			data: {
+				ip_host: $_GET['ip_host']
+			},
 			dataType: 'json'
 		});
 
@@ -70,7 +79,10 @@ $(document).ready(function() {
 		// Uptime
 		var requestUpTime = $.ajax({
 			url: "getUpTime.php",
-			method: 'POST',
+			type: 'GET',
+			data: {
+				ip_host: $_GET['ip_host']
+			},
 			dataType: 'json'
 		});
 		
@@ -83,7 +95,10 @@ $(document).ready(function() {
 		var requestDiskSpaceUsage = $.ajax({
 			//url: "getNumberDisks.php",
 			url: "getDiskSpaceUsage.php",
-			method: 'POST',
+			type: 'GET',
+			data: {
+				ip_host: $_GET['ip_host']
+			},
 			dataType: 'json'
 		});
 		
@@ -170,3 +185,13 @@ $.fn.animateRotate = function(angle, duration, easing, complete) {
     $({deg: 0}).animate({deg: angle}, args);
   });
 };
+
+var $_GET = {};
+
+document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+    function decode(s) {
+        return decodeURIComponent(s.split("+").join(" "));
+    }
+
+    $_GET[decode(arguments[1])] = decode(arguments[2]);
+});

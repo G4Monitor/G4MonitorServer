@@ -8,3 +8,11 @@
 	margin-right: auto;
 	max-width: initial;
 }
+
+body {
+	background-image: url(./img/denim.png);
+}
+
+.text-white {
+	color: #ffffff;
+}

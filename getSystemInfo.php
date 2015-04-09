@@ -4,7 +4,7 @@
 	
 	$host = new Config;
 
-	$ip_host = $host->setIpHost('192.168.31.182');
+	$ip_host = $host->setIpHost($_REQUEST['ip_host']);
 	$port    = $host->setPort(4445);
 
 	// create socket
@@ -25,6 +25,10 @@
 	$getProcessor = "SystemInfo--getArch\n";
 	socket_write($socket, $getProcessor, strlen($getProcessor)) or die("Could not send data to server\n");
 	$response['processor'] = socket_read($socket, 2048, PHP_NORMAL_READ);
+	
+	$getAvailableProcessors = "SystemInfo--getAvailableProcessors\n";
+	socket_write($socket, $getAvailableProcessors, strlen($getAvailableProcessors)) or die("Could not send data to server\n");
+	$response['available_processors'] = socket_read($socket, 2048, PHP_NORMAL_READ);
 
 	$response = json_encode($response);
 

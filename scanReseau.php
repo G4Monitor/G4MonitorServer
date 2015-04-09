@@ -16,9 +16,6 @@
 
 			$(document).ready(function() {
 
-
-				var ipList = [];
-
 				var line = "";
 				var ip_start = 1;
 				var ip_end = 254;
@@ -32,30 +29,63 @@
 						url: "scanner.php",
 						type: 'POST',
 						data: {
-							ip: '192.168.0.' + ip_start
+							ip: '192.168.31.' + ip_start
 						},
 						dataType: 'text'
 					});
 
-					request.done(function(data) {
+					request.done(function(ip) {
 						
-						if(data != '') {
-							ipList[ipList.length] = data;
-							var line = '';
+						if(ip != '') {
 
-							line += '<div class="large-3 columns">';
-								line += '<div class="panel radius">';
-									line += '<div class="large-12">';
-										line += '<h2 class="text-center"><i class="fi-monitor"></i></h2>';
-									line += '</div>';
-									line += '<div class="large-12">';
-										line += '<div class="text-center">';
-											line += '<span>'+data+'</span>';
+							var line = '';
+							var messageErreur = '';
+							var ram;
+
+							var request = $.ajax({
+								url: "getRAM.php",
+								type: 'POST',
+								data: {
+									ip_host: ip
+								},
+								dataType: 'text'
+							});
+							request.done(function(ram) {
+								if (ram.indexOf("Could not") !=-1) {
+								    messageErreur = 'Sonde de supervision indisponible';
+								}
+								else {
+									ram = ram.replace(/[\n]/gi, "");
+								}
+
+								if(messageErreur != '') {
+									line += '<div class="large-3 columns">';
+								}
+								else {
+									line += '<div class="large-3 columns" onClick="document.location.href=\'index.php?ip_host='+ip+'\'">';
+								}
+									line += '<div class="panel radius">';
+										line += '<div class="large-12">';
+											line += '<h2 class="text-center"><i class="fi-monitor"></i></h2>';
+										line += '</div>';
+										line += '<div class="large-12">';
+											line += '<div class="text-center">';
+												line += '<span>'+ip+'</span><br/>';
+												if(messageErreur != '') {
+													line += messageErreur;
+												}
+												else {
+													line += '<div class="progress large-12">';
+													line +='<span id="percentUsedRAMBar" class="meter" style="width: '+ram+'%"></span>';
+													line+= '</div>';
+												}
+											line += '</div>';
 										line += '</div>';
 									line += '</div>';
 								line += '</div>';
-							line += '</div>';
-							$('#devices').append(line);
+								$('#devices').append(line);
+							});
+
 						}
 
 						$('#percentLoaded').css({
