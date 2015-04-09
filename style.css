@@ -19,4 +19,14 @@ body {
 .text-white {
 	color: #ffffff;
 }
+.text-success {
+	color: green;
+}
+.text-alert {
+	color: red;
+}
 
+.scrollableDiv {
+    height: 200px;
+    overflow: scroll;
+}

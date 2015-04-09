@@ -34,7 +34,7 @@
 					<i class="fi-eye"></i>
 					<label>Scan network</label>
 				</a>
-				<a class="item" href="#">
+				<a class="item" href="global-history.php">
 					<i class="fi-graph-bar"></i>
 					<label>Global history</label>
 				</a>

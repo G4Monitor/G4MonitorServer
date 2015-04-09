@@ -50,17 +50,17 @@ $(document).ready(function() {
 					});
 					request.done(function(ram) {
 						if (ram.indexOf("Could not") !=-1) {
-						    messageErreur = 'Sonde de supervision indisponible';
+						    messageErreur = '<i class="fi-lock text-alert"></i><span class="text-alert"> Unavailable supervision sensor</span>';
 						}
 						else {
 							ram = ram.replace(/[\n]/gi, "");
 						}
 
 						if(messageErreur != '') {
-							line += '<div class="large-3 columns" data-equalizer-watch>';
+							line += '<div class="large-3 columns" style="opacity: 0.8;" data-equalizer-watch>';
 						}
 						else {
-							line += '<div class="large-3 columns" onClick="document.location.href=\'device-details.php?ip_host='+ip+'\'" data-equalizer-watch>';
+							line += '<div class="large-3 columns cursor-pointer" onClick="document.location.href=\'device-details.php?ip_host='+ip+'\'" data-equalizer-watch>';
 						}
 							line += '<div class="panel radius">';
 								line += '<div class="large-12">';
@@ -73,9 +73,7 @@ $(document).ready(function() {
 											line += messageErreur;
 										}
 										else {
-											line += '<div class="progress large-12">';
-											line +='<span id="percentUsedRAMBar" class="meter" style="width: '+ram+'%"></span>';
-											line+= '</div>';
+											line += '<i class="fi-unlock text-success"></i><span class="text-success"> Check the device</span>';
 										}
 									line += '</div>';
 								line += '</div>';
