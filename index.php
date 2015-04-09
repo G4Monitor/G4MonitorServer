@@ -1,3 +1,7 @@
+<?php 
+require "verif_if_logged.php";
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -46,6 +50,12 @@
 
 			<h4 class="text-white">Do not lose sight of the priorities</h4>
 		</div>
+
+		<div class="row">
+			<div class="large-12 text-right">
+				<a href="disconnect.php" class="button"> Log out </a>
+			</div>	
+		</div> 
 
 	</body>
 </html>

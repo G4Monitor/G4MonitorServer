@@ -2,7 +2,6 @@
 
 Class Config
 {
-
 	var $ip_host = false;
 	var $port = false;
 
@@ -26,22 +25,24 @@ Class Config
 		return $this->port = $value;
 	}
 
-	function addIpToMonitor($ips)
+	function authentification($login, $password)
 	{
-		$ipHost = array();
-		if($this->ip_host)
-			$ipHost[] = $ip_host;
-		if(is_array($ips))
-		{
-			foreach ($ips as $key => $ip) {
-				$ipHost[] = $ip;
-			}
-		}
-		else {
-		 	$ipHost[] = $ip;
-		 } 
+		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$sql = "SELECT id FROM account WHERE login = :login AND password = :password";
+		$rq = $bdd->prepare($sql);
+		$rq->bindValue('login', $login, PDO::PARAM_STR);
+		$rq->bindValue('password', sha1($password), PDO::PARAM_STR);
+		$rq->execute();
 
-		 return $ipHost;
+		if($rq->rowCount())
+		{
+			$_SESSION['login'] = $login ;
+			$_SESSION['is_logged'] = true ;
+		}
+		else
+			$_SESSION['is_logged'] = false ;
+
+		return true;
 	}
 
 

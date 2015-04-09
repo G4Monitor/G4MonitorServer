@@ -1,3 +1,6 @@
+<?php 
+require "verif_if_logged.php";
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -66,6 +69,12 @@
 				
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="large-12 text-right">
+				<a href="disconnect.php" class="button"> Log out </a>
+			</div>	
+		</div> 
 
 		<script src="./Foundation/js/vendor/modernizr.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
