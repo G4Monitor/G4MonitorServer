@@ -38,11 +38,28 @@ Class Config
 		{
 			$_SESSION['login'] = $login ;
 			$_SESSION['is_logged'] = true ;
+			$_SESSION['password'] = sha1($password);
 		}
 		else
 			$_SESSION['is_logged'] = false ;
 
 		return true;
+	}
+
+	function email_adress_to_inform()
+	{
+		$ret="";
+		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$sql = "SELECT email FROM mailto WHERE sendto = 1"
+		$rq = $bdd->prepare($sql);
+		$rq->setFetchMode(PDO::FETCH_OBJ);
+		while( $r = $rq->fetch() )
+		{
+			$ret .= ", ".$r->email;
+		}
+
+		$ret = substr($ret, 2);
+		return $ret;
 	}
 
 

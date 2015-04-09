@@ -35,7 +35,7 @@
 				<i class="fi-graph-bar"></i>
 				<label>Global history</label>
 			</a>
-			<a class="item" href="#">
+			<a class="item" href="options.php">
 				<i class="fi-wrench"></i>
 				<label>Options</label>
 			</a>
@@ -78,7 +78,7 @@
 										{
 										?>
 										<tr>
-											<td class="large-4 columns"><<?php echo substr($last_alert['date'], 0, 10) ;?></td>
+											<td class="large-4 columns"><?php echo substr($last_alert['date'], 0, 10) ;?></td>
 											<td class="large-4 columns">RAM</td>
 											<td class="large-4 columns text-alert">Unsolved</td>
 										</tr>
@@ -152,6 +152,14 @@
 			<div class="panel">
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+
+
+		<footer class="footer">
+		<div class="row text-right">
+
+				<a href="disconnect.php" style="font-size: 1.5em;"> Log out </a>
+		</div>
+		</footer>
            <script>  google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
