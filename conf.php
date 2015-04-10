@@ -115,6 +115,8 @@ Class Config
 		$rq = $bdd->prepare($sql);
 		$rq->bindValue('id', $error_id, PDO::PARAM_INT);
 		$rq->bindValue('state', $state, PDO::PARAM_INT);
+
+		
 		return $rq->execute();
 	}
 }

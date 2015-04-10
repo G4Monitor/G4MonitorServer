@@ -52,13 +52,13 @@ require "verif_if_logged.php";
 		<?php
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$last_alerts = array();
-		$sql = "SELECT e.device_mac_address, e.type, e.state, e.errorDate, d.deviceName FROM error e, device d WHERE e.device_mac_address = d.deviceMac LIMIT 10 ";
+		$sql = "SELECT e.id, e.device_mac_address, e.type, e.state, e.errorDate, d.deviceName FROM error e, device d WHERE e.device_mac_address = d.deviceMac LIMIT 10 ";
 		$rq = $bdd->prepare($sql);
 		$rq->execute();
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )
 		{
-			$last_alerts[] = array("type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate, "deviceMac" => $r->device_mac_address, "deviceName" => $r->deviceName);
+			$last_alerts[] = array("id" => $r->id, "type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate, "deviceMac" => $r->device_mac_address, "deviceName" => $r->deviceName);
 		}
 		?>
 		<div data-equalizer>
@@ -84,10 +84,10 @@ require "verif_if_logged.php";
 										{
 										?>
 										<tr>
-											<td class="large-3 columns"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></td>
-											<td class="large-3 columns"><?php echo $last_alert['deviceName'];?></td>
-											<td class="large-3 columns"><?php echo $last_alert['type'] ?></td>
-											<td class="large-3 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><?php echo $last_alert['state'] ?></td>
+											<td class="large-3 columns"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key?>"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></a></td>
+											<td class="large-3 columns"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key?>"><?php echo $last_alert['deviceName'];?></a></td>
+											<td class="large-3 columns"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key?>"><?php echo $last_alert['type'] ?></a></td>
+											<td class="large-3 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key?>"><?php echo $last_alert['state'] ?></a></td>
 										</tr>
 										<?php
 										}
@@ -190,12 +190,12 @@ require "verif_if_logged.php";
 		  <p class="lead">
 		  <form method="POST" action="modify_alert_state.php">
 		  	<select name="error_state">
-		  		<option value="unsolved" value="unsolved" <?php echo ($last_alert['state'] == 'Unsolved') ? 'checked' : false ?>>Unsolved</option>
-		  		<option value="solved" value="solved" <?php echo ($last_alert['state'] == 'Solved') ?  'checked' : false ?>>Solved</option>
+		  		<option value="Unsolved" <?php echo ($last_alert['state'] == 'Unsolved') ? "selected" : false ?> >Unsolved</option>
+		  		<option value="Solved" <?php echo ($last_alert['state'] == 'Solved') ? "selected" : false ?> >Solved</option>
 		  	</select>
 
-		  	<input type="hidden" name="id_error" value="<?php echo $last_alert['id'] ;?>">
-		  	<input type="submit" value="Modify">
+		  	<input type="hidden" name="error_id" value="<?php echo $last_alert['id'] ;?>">
+		  	<input class="button" type="submit" value="Modify">
 			</form>
 		</p>
 		  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
