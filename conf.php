@@ -50,17 +50,17 @@ Class Config
 
 	function email_adress_to_inform()
 	{
-		$ret="";
+		$ret = "";
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-		$sql = "SELECT email FROM mailto WHERE sendto = 1";
+		$sql = "SELECT email FROM `mailto` WHERE `sendto` = 1 ";
 		$rq = $bdd->prepare($sql);
+		$rq->execute();
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )
 		{
 			$ret .= ", ".$r->email;
 		}
-
-		$ret = substr($ret, 0, 2);
+		$ret = substr($ret, 2);
 		return $ret;
 	}
 
