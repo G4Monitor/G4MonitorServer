@@ -90,7 +90,7 @@ session_start();
 					<label class="text-white text-center"> Add someone more to inform
 						<input type="text" name="email">
 					</label>
-					<input class="button" type="submit" value="Modify">
+					<input class="button" type="submit" value="Update">
 				<form>
 			</div>
 		</div>
