@@ -1,8 +1,10 @@
 <?php
-include "config.php";
+include "conf.php";
 
 $config = new Config;
 
+echo $config->email_adress_to_inform();
+die();
 	date_default_timezone_set('Europe/Paris');
 
 	$deviceMac = substr(trim($_POST['deviceMac'], '\n'),0,17);
