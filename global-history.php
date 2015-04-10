@@ -135,7 +135,7 @@
 					<div class="scrollableDiv">
 						<?php 
 						$last_updates = array();
-						$sql = "SELECT d.deviceName, a.IPAddress, a.allocationDate FROM device d LEFT JOIN allocation a ON d.deviceMac = a.deviceMac LIMIT 10";
+						$sql = "SELECT d.deviceName, a.IPAddress, a.allocationDate FROM device d LEFT JOIN allocation a ON d.deviceMac = a.deviceMac GROUP BY d.deviceName LIMIT 10";
 						$rq = $bdd->prepare($sql);
 						$rq->execute();
 						$rq->setFetchMode(PDO::FETCH_OBJ);
