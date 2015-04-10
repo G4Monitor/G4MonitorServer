@@ -90,10 +90,10 @@ $(document).ready(function() {
 			});
 			$('#percentUsedRAM').text(data['percent_used_ram']);
 
-			if(data['percent_used_ram'] < 50) {
+			if(data['percent_used_ram'] < 30) {
 				$('#percentUsedRAMParent').addClass("success");
 			}
-			else if(data['percent_used_ram'] >= 80) {
+			else if(data['percent_used_ram'] >= 50) {
 				setTimeout(function(){
 					$('#percentUsedRAMParent').addClass("alert");
 					var requestSendAlertRAM = $.ajax({

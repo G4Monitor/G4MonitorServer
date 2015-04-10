@@ -29,7 +29,7 @@ require "verif_if_logged.php";
 				<i class="fi-graph-bar"></i>
 				<label>Global history</label>
 			</a>
-			<a class="item" href="#">
+			<a class="item" href="options.php">
 				<i class="fi-wrench"></i>
 				<label>Options</label>
 			</a>
@@ -39,7 +39,7 @@ require "verif_if_logged.php";
 			</a>
 		</div>
 		
-		<div class="large-3 columns">
+		<div id="scanLauncher"class="large-3 columns">
 			<div class="panel">
 					<div class="row">
 						<div class="large-12 columns">
@@ -79,6 +79,7 @@ require "verif_if_logged.php";
 
 		<script src="./Foundation/js/vendor/modernizr.js"></script>
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="./js/scan-network.js"></script>
 	</body>
 </html>
