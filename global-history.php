@@ -11,6 +11,7 @@
 		<script src="./Foundation/js/vendor/jquery.js"></script>
 		<script src="./Foundation/js/foundation/foundation.js"></script>
 		<script src="./Foundation/js/foundation/foundation.equalizer.js"></script>
+		<script src="./Foundation/js/foundation/foundation.reveal.js"></script>
 		<script>
 			$(document).ready(function() {
 				$(document).foundation();
@@ -47,13 +48,13 @@
 		<?php
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$last_alerts = array();
-		$sql = "SELECT type, state, errorDate FROM error LIMIT 10 ";
+		$sql = "SELECT e.device_mac_address, e.type, e.state, e.errorDate, d.deviceName FROM error e, device d WHERE e.device_mac_address = d.deviceMac LIMIT 10 ";
 		$rq = $bdd->prepare($sql);
 		$rq->execute();
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )
 		{
-			$last_alerts[] = array("type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate);
+			$last_alerts[] = array("type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate, "deviceMac" => $r->device_mac_address, "deviceName" => $r->deviceName);
 		}
 		?>
 		<div data-equalizer>
@@ -67,9 +68,10 @@
 								<table class="large-12">
 									<thead>
 										<tr>
-											<th class="large-4 columns">Date</th>
-											<th class="large-4 columns">Type</th>
-											<th class="large-4 columns">State</th>
+											<th class="large-3 columns">Date</th>
+											<th class="large-3 columns">Device</th>
+											<th class="large-3 columns">Type</th>
+											<th class="large-3 columns">State</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -78,10 +80,12 @@
 										{
 										?>
 										<tr>
-											<td class="large-4 columns"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></td>
-											<td class="large-4 columns"><?php echo $last_alert['type'] ?></td>
-											<td class="large-4 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><?php echo $last_alert['state'] ?></td>
+											<td class="large-3 columns"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></td>
+											<td class="large-3 columns"><?php echo $last_alert['deviceName'];?></td>
+											<td class="large-3 columns"><?php echo $last_alert['type'] ?></td>
+											<td class="large-3 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><?php echo $last_alert['state'] ?></td>
 										</tr>
+
 										<?php
 										}
 										?>
@@ -156,6 +160,7 @@
 							<tbody>
 								<?php 
 								foreach ($last_updates as $last_update) {
+									if($last_update['deviceName'] != "undefined") {
 								?>
 								<tr>
 									<td class="large-4 columns"><?php echo $last_update['deviceName'] ?></td>
@@ -163,6 +168,7 @@
 									<td class="large-4 columns"><?php echo $last_update['ip_address'] ?></td>
 								</tr>
 								<?php
+									}
 								}
 								?>
 							</tbody>
