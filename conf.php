@@ -108,6 +108,15 @@ Class Config
 	}
 
 
+	function change_state_error($error_id, $state)
+	{
+		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$sql = "UPDATE error SET state = :state WHERE id = :id";
+		$rq = $bdd->prepare($sql);
+		$rq->bindValue('id', $error_id, PDO::PARAM_INT);
+		$rq->bindValue('state', $state, PDO::PARAM_INT);
+		return $rq->execute();
+	}
 }
 
 ?>

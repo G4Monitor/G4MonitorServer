@@ -1,3 +1,6 @@
+<?php 
+require "verif_if_logged.php";
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,6 +13,7 @@
 		<script src="./Foundation/js/vendor/modernizr.js"></script>
 		<script src="./Foundation/js/vendor/jquery.js"></script>
 		<script src="./Foundation/js/foundation/foundation.js"></script>
+		<script src="./Foundation/js/foundation.reveal.js"></script>
 		<script src="./Foundation/js/foundation/foundation.equalizer.js"></script>
 		<script>
 			$(document).ready(function() {
@@ -47,13 +51,13 @@
 		<?php
 		$bdd = new PDO('mysql:host=127.0.0.1;dbname=g4monitor;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$last_alerts = array();
-		$sql = "SELECT type, state, errorDate FROM error LIMIT 10 ";
+		$sql = "SELECT type, state, errorDate, id FROM error LIMIT 10 ";
 		$rq = $bdd->prepare($sql);
 		$rq->execute();
 		$rq->setFetchMode(PDO::FETCH_OBJ);
 		while( $r = $rq->fetch() )
 		{
-			$last_alerts[] = array("type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate);
+			$last_alerts[] = array("id" => $r->id, "type" => $r->type, "state" => $r->state, "errorDate" => $r->errorDate);
 		}
 		?>
 		<div data-equalizer>
@@ -74,14 +78,19 @@
 									</thead>
 									<tbody>
 										<?php
-										foreach ($last_alerts as $last_alert) 
+										foreach ($last_alerts as $key => $last_alert) 
 										{
 										?>
 										<tr>
-											<td class="large-4 columns"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></td>
-											<td class="large-4 columns"><?php echo $last_alert['type'] ?></td>
-											<td class="large-4 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><?php echo $last_alert['state'] ?></td>
+											<td class="large-4 columns"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key;?>"><?php echo substr($last_alert['errorDate'], 0, 10) ;?></a></td>
+											<td class="large-4 columns"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key;?>"><?php echo $last_alert['type'] ?></a></td>
+											<td class="large-4 columns <?php echo ($last_alert['state'] == 'Unsolved') ? 'text-alert' : 'text-success' ?>"><a class="modal_link_error" href="#" data-reveal-id="alert<?php echo $key;?>"><?php echo $last_alert['state'] ?></a></td>
 										</tr>
+										
+
+
+
+
 										<?php
 										}
 										?>
@@ -171,6 +180,31 @@
 				</div>
 			</div>
 		</div>
+
+		<?php
+		foreach ($last_alerts as $key => $last_alert) 
+		{
+		?>
+		<div id="alert<?php echo $key;?>" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+		 	 <h2 id="modalTitle">Change error's state</h2>
+		  <p class="lead">
+		  <form method="POST" action="modify_alert_state.php">
+		  	<select name="error_state">
+		  		<option value="unsolved" value="unsolved" <?php echo ($last_alert['state'] == 'Unsolved') ? 'checked' : false ?>>Unsolved</option>
+		  		<option value="solved" value="solved" <?php echo ($last_alert['state'] == 'Solved') ?  'checked' : false ?>>Solved</option>
+		  	</select>
+
+		  	<input type="hidden" name="id_error" value="<?php echo $last_alert['id'] ;?>">
+		  	<input type="submit" value="Modify">
+			</form>
+		</p>
+		  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+		</div>
+		<?php
+		}
+		?>
+
+
 		<div class="large-12 columns">
 			<div class="panel">
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}"></script>
@@ -217,6 +251,8 @@
 				<a href="disconnect.php" style="font-size: 1.5em;"> Log out </a>
 		</div>
 		</footer>
+
+
            <script>  google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
