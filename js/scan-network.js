@@ -8,10 +8,13 @@ $(document).ready(function() {
 		host = host.split('.');
 		host = host[0] + '.' + host[1] + '.' + host[2] + '.';
 
+
 		$('#launchScanNetwork').text('Scan in progress...');
 		$('#launchScanNetwork').prop("disabled", true);
 		$('#devices').text('');
-		$('#devices').removeClass('panel');
+		//$('#devices').removeClass('panel');
+		$('#devices').switchClass('panel', '', 500, 'easeInOutQuad');
+		$('#scanLauncher').switchClass('large-3', 'large-4 large-push-4', 1000, 'easeInOutQuad');
 		$('#loader').show(500);
 
 		var line = "";
@@ -92,6 +95,8 @@ $(document).ready(function() {
 					$('#loaderBar').removeClass('success');
 				}
 				else {
+					$('#scanLauncher').removeClass('large-4 large-push-4');
+					$('#scanLauncher').addClass('large-3');
 					$('#loaderBar').addClass('success');
 					$('#launchScanNetwork').text('Scan the network');
 					$('#launchScanNetwork').prop("disabled", false);
