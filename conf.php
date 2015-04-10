@@ -60,7 +60,7 @@ Class Config
 			$ret .= ", ".$r->email;
 		}
 
-		$ret = substr($ret, 2);
+		$ret = substr($ret, 0, 2);
 		return $ret;
 	}
 
